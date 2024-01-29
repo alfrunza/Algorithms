@@ -6,7 +6,7 @@ package others.clock;
 
 public class Main {
     public static void main(String[] args) {
-        String digitalInput = "7:20";
+        String digitalInput = "3:15";
         Clock clock = new Clock(digitalInput);
 
         int hour = clock.splitHourAndMinute(digitalInput)[0], minute = clock.splitHourAndMinute(digitalInput)[1];
