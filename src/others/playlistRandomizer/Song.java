@@ -1,5 +1,8 @@
 package others.playlistRandomizer;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 public class Song {
 
     private String title;
@@ -10,11 +13,11 @@ public class Song {
 
     private boolean liked;
 
-    public Song(String title, String artist, String album, boolean liked) {
-        this.title = title;
-        this.artist = artist;
-        this.album = album;
-        this.liked = liked;
+    public Song(JSONObject songList) {
+        this.title = songList.get("title").toString();
+        this.artist = songList.get("artist").toString();
+        this.album = songList.get("album").toString();
+        this.liked = songList.get("liked").toString().equalsIgnoreCase("y");
     }
 
     public String getTitle() {

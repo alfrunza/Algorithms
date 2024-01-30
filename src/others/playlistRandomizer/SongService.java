@@ -28,12 +28,12 @@ public class SongService {
             List<Song> allSongs = new ArrayList<>();
             for (Object s : songList) {
                 JSONObject songJson = (JSONObject) s;
-                String liked = songJson.get("liked").toString();
-                String title = songJson.get("title").toString();
-                String artist = songJson.get("artist").toString();
-                String album = songJson.get("album").toString();
-                boolean isLiked = liked.equalsIgnoreCase("y");
-                allSongs.add(new Song(title, artist, album, isLiked));
+//                String liked = songJson.get("liked").toString();
+//                String title = songJson.get("title").toString();
+//                String artist = songJson.get("artist").toString();
+//                String album = songJson.get("album").toString();
+//                boolean isLiked = liked.equalsIgnoreCase("y");
+                allSongs.add(new Song(songJson));
             }
             return allSongs;
         } catch (IOException iex) {
