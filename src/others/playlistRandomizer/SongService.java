@@ -9,39 +9,49 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class SongService {
 
 
-
     public static List<Song> getLikedSongs(String fileName) throws IOException, ParseException {
-        JSONParser parser = new JSONParser();
-        JSONArray songList = (JSONArray) parser.parse(new FileReader(fileName));
+        return getAllSongs(fileName)
+                .stream()
+                .filter(Song::getLiked)
+                .collect(Collectors.toList());
+    }
 
-        List<Song> likedSongs = new ArrayList<>();
-
-        for (Object s : songList) {
-            JSONObject songJson = (JSONObject) s;
-            String liked = (String) songJson.get("liked");
-            String title = (String) songJson.get("title");
-            String artist = (String) songJson.get("artist");
-            String album = (String) songJson.get("album");
-            boolean isLiked = false;
-            if("y".equals(liked)) {
-                isLiked = true;
-                Song song = new Song(title, artist, album, isLiked);
-                likedSongs.add(song);
+    public static List<Song> getAllSongs(String fileName) {
+        try {
+            JSONParser parser = new JSONParser();
+            JSONArray songList = (JSONArray) parser.parse(new FileReader(fileName));
+            List<Song> allSongs = new ArrayList<>();
+            for (Object s : songList) {
+                JSONObject songJson = (JSONObject) s;
+                String liked = songJson.get("liked").toString();
+                String title = songJson.get("title").toString();
+                String artist = songJson.get("artist").toString();
+                String album = songJson.get("album").toString();
+                boolean isLiked = liked.equalsIgnoreCase("y");
+                allSongs.add(new Song(title, artist, album, isLiked));
             }
+            return allSongs;
+        } catch (IOException iex) {
+            System.out.println("Wrong file");
+            System.out.println(iex.getMessage());
+            return null;
+        } catch (ParseException pex) {
+            System.out.println("Wrong JSON Format");
+            System.out.println(pex.getMessage());
+            return null;
         }
-
-        return likedSongs;
     }
 
 
     public static void main(String[] args) {
         try {
             List<Song> likedSongs = getLikedSongs("songs.json");
-            for(Song song : likedSongs) {
+            for (Song song : likedSongs) {
                 System.out.println(song.getTitle());
             }
         } catch (IOException | ParseException e) {
