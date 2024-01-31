@@ -16,9 +16,6 @@ import java.util.stream.Collectors;
 
 public class SongService {
 
-    final static String fileName = "songs.json";
-
-
     public static List<Song> getLikedSongs(String fileName) throws IOException, ParseException {
 
         //Get liked songs from whole list, filtered by liked flag
@@ -69,7 +66,7 @@ public class SongService {
         //Condition is that more than 50% of the playlist are liked songs
         final int capacity = 15;
         Random rand = new Random();
-        int rnd = rand.nextInt(capacity/2 + 1, capacity);
+        int rnd = rand.nextInt(capacity / 2 + 1, capacity);
 
         //Define collection of liked songs
         List<Song> likedSongsCollection = getLikedSongs(fileName);
@@ -77,13 +74,13 @@ public class SongService {
         //Check to see if number of liked songs is larger than rnd
         //If not enough liked songs to fulfill condition,
         //add as many as possible
-        if(rnd > likedSongsCollection.size()){
+        if (rnd > likedSongsCollection.size()) {
             rnd = likedSongsCollection.size();
         }
 
         //Add rnd number of liked songs to the playlist
         Collections.shuffle(likedSongsCollection);
-        for(int i = 0; i < rnd; i++){
+        for (int i = 0; i < rnd; i++) {
             playlist.add(likedSongsCollection.get(i));
         }
 
@@ -92,7 +89,7 @@ public class SongService {
         Collections.shuffle(notLikedSongsCollection);
 
         //Fill remainder of playlist with unliked songs
-        for(int i = 0; i < capacity - rnd; i++){
+        for (int i = 0; i < capacity - rnd; i++) {
             playlist.add(notLikedSongsCollection.get(i));
         }
 
@@ -100,17 +97,5 @@ public class SongService {
         //Shuffle one more time to randomize it further
         Collections.shuffle(playlist);
         return playlist;
-    }
-
-    public static void main(String[] args) {
-        List<Song> playlist;
-        try {
-            playlist = buildPlaylist(fileName);
-            for (Song song : playlist) {
-                System.out.println(song.getTitle());
-            }
-        } catch (IOException | ParseException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }
