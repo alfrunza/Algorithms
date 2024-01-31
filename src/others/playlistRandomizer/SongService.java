@@ -80,18 +80,15 @@ public class SongService {
 
         //Add rnd number of liked songs to the playlist
         Collections.shuffle(likedSongsCollection);
-        for (int i = 0; i < rnd; i++) {
-            playlist.add(likedSongsCollection.get(i));
-        }
+        playlist.addAll(likedSongsCollection.subList(0,rnd-1));
 
         //Define collection of not liked songs and shuffle it
         List<Song> notLikedSongsCollection = getNotLikedSongs(fileName);
         Collections.shuffle(notLikedSongsCollection);
 
         //Fill remainder of playlist with unliked songs
-        for (int i = 0; i < capacity - rnd; i++) {
-            playlist.add(notLikedSongsCollection.get(i));
-        }
+        playlist.addAll(notLikedSongsCollection.subList(0,capacity-rnd-1));
+
 
         //For now, the playlist is ordered by liked
         //Shuffle one more time to randomize it further
