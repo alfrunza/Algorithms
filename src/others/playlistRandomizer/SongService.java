@@ -12,31 +12,25 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Predicate;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import java.util.regex.*;
 
 public class SongService {
 
     public static List<Song> getLikedSongs(String fileName) throws IOException, ParseException {
 
         //Get liked songs from whole list, filtered by liked flag
-        return getAllSongs(fileName)
-                .stream()
-                .filter(Song::getLiked)
-                .collect(Collectors.toList());
+        return getAllSongs(fileName).stream().filter(Song::getLiked).collect(Collectors.toList());
     }
 
     public static List<Song> getNotLikedSongs(String fileName) throws IOException, ParseException {
 
         //Get not liked songs from whole list, filtered by liked flag
-        return getAllSongs(fileName)
-                .stream()
-                .filter(Predicate.not(Song::getLiked))
-                .collect(Collectors.toList());
+        return getAllSongs(fileName).stream().filter(Predicate.not(Song::getLiked)).collect(Collectors.toList());
     }
 
-    public static List<Song> getAllSongs(String fileName) {
+    public static List<Song> getAllSongs(String fileName) throws IOException, ParseException {
         try {
             //Parse JSON file
             JSONParser parser = new JSONParser();
@@ -49,24 +43,17 @@ public class SongService {
                 allSongs.add(new Song(songJson));
             }
             return allSongs;
-        } catch (IOException iex) {
-            System.out.println("Wrong file");
-            System.out.println(iex.getMessage());
-            return null;
-        } catch (ParseException pex) {
-            System.out.println("Wrong JSON Format");
-            System.out.println(pex.getMessage());
-            return null;
+        } catch (IOException | ParseException e) {
+            throw e;
         }
     }
 
     public static List<Song> buildPlaylist(String fileName) throws IOException, ParseException {
         Pattern p = Pattern.compile("\\bjson\\b", Pattern.CASE_INSENSITIVE);
         Matcher m = p.matcher(fileName);
-        IOException e = new IOException("Wrong file format");
 
-        if(!m.find()){
-            throw e;
+        if (!m.find()) {
+            throw new IOException("Wrong file extension");
         }
 
         //Define likedSongsCollection
@@ -91,14 +78,14 @@ public class SongService {
 
         //Add rnd number of liked songs to the playlist
         Collections.shuffle(likedSongsCollection);
-        playlist.addAll(likedSongsCollection.subList(0,rnd-1));
+        playlist.addAll(likedSongsCollection.subList(0, rnd - 1));
 
         //Define collection of not liked songs and shuffle it
         List<Song> notLikedSongsCollection = getNotLikedSongs(fileName);
         Collections.shuffle(notLikedSongsCollection);
 
         //Fill remainder of playlist with unliked songs
-        playlist.addAll(notLikedSongsCollection.subList(0,capacity-rnd-1));
+        playlist.addAll(notLikedSongsCollection.subList(0, capacity - rnd - 1));
 
 
         //For now, the playlist is ordered by liked
