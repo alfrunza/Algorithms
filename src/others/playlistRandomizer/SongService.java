@@ -14,6 +14,8 @@ import java.util.Random;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import java.util.regex.*;
+
 public class SongService {
 
     public static List<Song> getLikedSongs(String fileName) throws IOException, ParseException {
@@ -59,6 +61,18 @@ public class SongService {
     }
 
     public static List<Song> buildPlaylist(String fileName) throws IOException, ParseException {
+        Pattern p = Pattern.compile("\\bjson\\b", Pattern.CASE_INSENSITIVE);
+        Matcher m = p.matcher(fileName);
+        IOException e = new IOException("Wrong file format");
+
+        if(!m.find()){
+            throw e;
+        }
+
+        //Define likedSongsCollection
+        List<Song> likedSongsCollection;
+        likedSongsCollection = getLikedSongs(fileName);
+
         List<Song> playlist = new ArrayList<>();
 
         //Define max playlist capacity and number of liked songs
@@ -67,9 +81,6 @@ public class SongService {
         final int capacity = 15;
         Random rand = new Random();
         int rnd = rand.nextInt(capacity / 2 + 1, capacity);
-
-        //Define collection of liked songs
-        List<Song> likedSongsCollection = getLikedSongs(fileName);
 
         //Check to see if number of liked songs is larger than rnd
         //If not enough liked songs to fulfill condition,
