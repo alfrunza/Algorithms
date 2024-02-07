@@ -7,10 +7,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -92,5 +89,14 @@ public class SongService {
         //Shuffle one more time to randomize it further
         Collections.shuffle(playlist);
         return playlist;
+    }
+
+    public static Map<String, Long> getArtistsAndOccurances(List<Song> playlist) {
+
+        Map<String, Long> occurances = playlist.stream().collect(Collectors.groupingBy(Song::getArtist, Collectors.counting()));
+        return occurances;
+    }
+
+    public static void main(String[] args) {
     }
 }
