@@ -6,6 +6,54 @@
     "liked": "y"
   },
   {
+    "title": "Thoughts & Prayers",
+    "artist": "Motionless In White",
+    "album": "Disguise",
+    "liked": "y"
+  },
+  {
+    "title": "Catharsis",
+    "artist": "Motionless In White",
+    "album": "Disguise",
+    "liked": "n"
+  },
+  {
+    "title": "Holding On To Smoke",
+    "artist": "Motionless In White",
+    "album": "Disguise",
+    "liked": "n"
+  },
+  {
+    "title": "Slaughterhouse",
+    "artist": "Motionless In White",
+    "album": "Scoring The End Of The World",
+    "liked": "y"
+  },
+  {
+    "title": "Scoring The End Of The World",
+    "artist": "Motionless In White",
+    "album": "Scoring The End Of The World",
+    "liked": "y"
+  },
+  {
+    "title": "Sign Of Life",
+    "artist": "Motionless In White",
+    "album": "Scoring The End Of The World",
+    "liked": "y"
+  },
+  {
+    "title": "Cause Of Death",
+    "artist": "Motionless In White",
+    "album": "Scoring The End Of The World",
+    "liked": "y"
+  },
+  {
+    "title": "Reincarnate",
+    "artist": "Motionless In White",
+    "album": "Reincarnate",
+    "liked": "y"
+  },
+  {
     "title": "My Consequences",
     "artist": "Palisades",
     "album": "Reaching Hypercritical",
@@ -106,5 +154,41 @@
     "artist": "Godsmack",
     "album": "Lighting Up The Sky",
     "liked": "n"
+  },
+  {
+    "title": "Hypa Hypa",
+    "artist": "Electric Callboy",
+    "album": "Hypa Hypa",
+    "liked": "y"
+  },
+  {
+    "title": "We Got The Moves",
+    "artist": "Electric Callboy",
+    "album": "Tekkno",
+    "liked": "y"
+  },
+  {
+    "title": "Tekkno Train",
+    "artist": "Electric Callboy",
+    "album": "Tekkno",
+    "liked": "y"
+  },
+  {
+    "title": "Spaceman",
+    "artist": "Electric Callboy",
+    "album": "Tekkno",
+    "liked": "n"
+  },
+  {
+    "title": "Arrow Of Love",
+    "artist": "Electric Callboy",
+    "album": "Tekkno",
+    "liked": "n"
+  },
+  {
+    "title": "Pump It",
+    "artist": "Electric Callboy",
+    "album": "Tekkno",
+    "liked": "y"
   }
 ]
