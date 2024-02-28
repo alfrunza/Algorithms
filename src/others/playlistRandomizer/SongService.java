@@ -91,12 +91,43 @@ public class SongService {
         return playlist;
     }
 
-    public static Map<String, Long> getArtistsAndOccurances(List<Song> playlist) {
+    public static Map<String, Long> getArtistsAndOccurrences(List<Song> playlist) {
+        //Create a map containing the artist as key and how many times they appear in the playlist as value
+        return playlist.stream().collect(Collectors.groupingBy(Song::getArtist, Collectors.counting()));
+//        LinkedHashMap<String, Long> sorted = new LinkedHashMap<>();
+//        ArrayList<Long> occurrences = new ArrayList<>();
+//        for(Map.Entry<String, Long> entry : unsortedArtistsAndOccurrences.entrySet()){
+//            occurrences.add(entry.getValue());
+//        }
+//        Collections.sort(occurrences);
+//        for(long occ : occurrences){
+//            for(Map.Entry<String, Long> entry : unsortedArtistsAndOccurrences.entrySet()){
+//                if(entry.getValue().equals(occ)) {
+//                    sorted.put(entry.getKey(), occ);
+//                }
+//            }
+//        }
+//        return sorted;
+    }
 
-        Map<String, Long> occurances = playlist.stream().collect(Collectors.groupingBy(Song::getArtist, Collectors.counting()));
-        return occurances;
+    public static Map<String, Long> getTopThreeArtists(Map<String, Long> artistsAndOccurrences) {
+        return artistsAndOccurrences.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue((v1, v2) -> Long.compare(v2, v1)))
+                .limit(3)
+                //Lambda checks if entry1 exists. If it exists,keep the existing one
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (entry1, entry2) -> entry1, LinkedHashMap::new));
     }
 
     public static void main(String[] args) {
+        try {
+            List<Song> playlist = buildPlaylist("songs.json");
+            for(Song s : playlist){
+                System.out.println(s.getTitle() + " by " + s.getArtist());
+            }
+//            System.out.println(getArtistsAndOccurrences(playlist));
+            System.out.println(getTopThreeArtists(getArtistsAndOccurrences(buildPlaylist("songs.json"))));
+        } catch (IOException | ParseException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
